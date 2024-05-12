@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Expense Tracker</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <h1>Expense Tracker</h1>
+        <div class="form">
+            <div class="form-group">
+                <label for="expense-category">Category:</label>
+                <select name="expense-category" id="expense-category">
+                    <option value="food">Food</option>
+                    <option value="shopping">Shopping</option>
+                    <option value="transportation">Transportation</option>
+                    <option value="entertainment">Entertainment</option>
+                    <option value="others">Others</option>
+                    
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="expense-name">Item Name:</label>
+                <input type="text" id="expense-name" placeholder="Enter name">
+            </div>
+            <div class="form-group">
+                <label for="expense-amount">Amount:</label>
+                <input type="number" id="expense-amount" placeholder="Enter amount">
+            </div>
+            <button id="add-expense-btn">Add Expense</button>
+            <button id="clear-all-expense-btn">Clear Expenses</button>
+        </div>
+
+        <div class="expense-list" id="expense-list">
+            <!-- Expenses will be dynamically added here -->
+        </div>
+
+        <div class="total-expense" id="total-expense">
+            <h2>Total Expenses</h2>
+            <ul id="total-expense-list">
+                <!-- Total expenses will be dynamically added here -->
+            </ul>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
