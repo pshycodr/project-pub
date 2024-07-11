@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bitter:ital,wght@0,100..900;1,100..900&family=Concert+One&family=M+PLUS+Rounded+1c&family=Signika+Negative:wght@300..700&family=Tauri&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- Style Sheets -->
+    <style>
+        :root {
+            --primary-color: #ba4949;
+            --secondary-color: #c15c5c;
+            --text-color: #333;
+            --light-text: #fff;
+            --border-color: #ccc;
+            --hover-color: #a13e3e;
+            --input-bg: #f5f5f5;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Bitter', serif;
+            background-color: var(--primary-color);
+            color: var(--text-color);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--light-text);
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 20px var(--shadow-color);
+        }
+
+        .TimerSection, .TodoSection {
+            margin-bottom: 30px;
+        }
+
+        .TSnav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .TSnav > div {
+            cursor: pointer;
+            padding: 5px 10px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .TSnav > div:hover {
+            background-color: var(--secondary-color);
+            color: var(--light-text);
+        }
+
+        .TStimer {
+            font-size: 4rem;
+            text-align: center;
+            margin-bottom: 20px;
+            font-family: "Concert One", sans-serif;
+            color: var(--primary-color);
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: var(--primary-color);
+            color: var(--light-text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--hover-color);
+        }
+
+        .todoHeading {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        .AllTodo ul {
+            list-style: none;
+        }
+
+        .AllTodo li {
+            background-color: var(--input-bg);
+            margin-bottom: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .AllTodo input[type="checkbox"] {
+            margin-right: 10px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background-color: var(--light-text);
+            padding: 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 400px;
+        }
+
+        input[type="text"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid var(--border-color);
+            border-radius: 5px;
+        }
+
+        @media (max-width: 600px) {
+            .TSnav {
+                flex-wrap: wrap;
+            }
+
+            .TSnav > div {
+                margin-bottom: 10px;
+            }
+
+            .TStimer {
+                font-size: 3rem;
+            }
+        }
+    </style>
+
+    <title>Pomodoro Timer with Todo</title>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Timer Section -->
+        <div class="TimerSection">
+            <div class="TSnav">
+                <div class="focus" role="button" aria-label="Focus timer">Focus</div>
+                <div class="Short-break" role="button" aria-label="Short break timer">Short Break</div>
+                <div class="long-break" role="button" aria-label="Long break timer">Long Break</div>
+                <div class="settings-icon" role="button" aria-label="Settings">
+                    <i class="fa fa-cog"></i>
+                </div>
+            </div>
+
+            <div class="TStimer" aria-live="polite">
+                25:00
+            </div>
+            
+            <button class="countDodown-start-button">Start</button>
+            <button class="countDodown-end-button" style="display: none;">End</button>
+        </div>
+
+        <!-- TODO section -->
+        <div class="TodoSection">
+            <div class="todoHeading">
+                <h2>Tasks</h2>
+            </div>
+            <div class="AllTodo">
+                <ul class="AllTodoUl"></ul>
+            </div>
+            <button class="AddTaskButton">
+                Add Task
+            </button>
+        </div>
+    </div>
+
+    <!-- Modals -->
+    <div class="modal TStimerInputContainer" style="display: none;">
+        <div class="modal-content">
+            <h2>Set Timer</h2>
+            <label for="minutesInput">Minutes:</label>
+            <input type="number" id="minutesInput" min="0" max="59" placeholder="25">
+
+            <label for="secondsInput">Seconds:</label>
+            <input type="number" id="secondsInput" min="0" max="59" placeholder="00">
+            
+            <button class="cancel">Cancel</button>
+            <button class="apply">Apply</button>
+        </div>
+    </div>
+
+    <div class="modal todoInputContainer" style="display: none;">
+        <div class="modal-content">
+            <h2>Add New Task</h2>
+            <input type="text" id="Todo" placeholder="What's on your mind today?">
+            <button class="TododInputCancel">Cancel</button>
+            <button class="TododInputSubmit">Submit</button>
+        </div>
+    </div>
+    
+    <script>
+    const countDownTimer = document.querySelector(".TStimer")
+    const countDownStartButton = document.querySelector(".countDodown-start-button")
+    const TimerButtonDiv = document.querySelector(".TSstartButton")
+    const TimerEndButton = document.querySelector(".countDodown-end-button")
+    const changeTimer = document.querySelector(".settings-icon")
+   
+    let timer
+
+    function countDownStart(min, sec){
+
+        if(min || sec){
+            min = Number(min)
+            sec = Number(sec)
+        }else{
+            [min, sec] = countDownTimer.textContent.split(":").map(Number)
+            
+            TimerEndButton.style.display = "inline"
+        }
+        
+        countDownStartButton.textContent = "Pause"
+        timer = setInterval(() => {
+            countDownTimer.textContent = `${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`
+
+            if(sec == 0 && min >= 0){
+                sec = 59
+                min --;
+            }else if(min < 0 ){
+                clearInterval(timer)
+                countDownStartButton.textContent = "Start"
+                TimerEndButton.style.display = "none"
+                countDownTimer.textContent = "25:00"
+            }else{
+                sec--
+            }
+        }, 1000) 
+    }
+
+    function countDownPause(timer){
+        clearInterval(timer)
+        countDownStartButton.textContent = "Restart"
+    }
+
+    function countDownRestart(CurrentTimer){
+        this.CurrentTimer = CurrentTimer
+        let [min, sec] = this.CurrentTimer.split(":").map(Number)
+        console.log(sec);
+        console.log(min);
+        countDownStart(min, sec)
+    }
+
+    function countDodownEnd(){
+        clearInterval(timer)
+        countDownStartButton.textContent = "Start"
+        TimerEndButton.style.display = "none"
+        countDownTimer.textContent = "25:00"
+        
+    }
+
+    countDownStartButton.addEventListener('click', function() {
+        if (countDownStartButton.textContent == "Start") {
+            countDownStart()
+
+        } else if(countDownStartButton.textContent == "Pause"){
+            countDownPause(timer)
+
+        }else if(countDownStartButton.textContent == "Restart"){
+            let CurrentTimer = countDownTimer.textContent
+            countDownRestart(CurrentTimer)
+        }
+
+    })
+
+    TimerEndButton.addEventListener('click', countDodownEnd)
+
+
+    changeTimer.addEventListener('click', () => {
+        document.querySelector(".TStimerInputContainer").style.display = "inline"
+    })
+    document.querySelector(".cancel").addEventListener('click', () => {
+        document.querySelector(".TStimerInputContainer").style.display = "none"
+    })
+
+    document.querySelector(".apply").addEventListener('click', (e) => {
+        e.preventDefault()
+        const minute = document.querySelector("#minutesInput").value
+        const second = document.querySelector("#secondsInput").value
+        
+        countDownTimer.textContent = `${(minute == "") ? "00" : minute}:${(second == "") ? "00" : second}`
+        document.querySelector(".TStimerInputContainer").style.display = "none"
+    })
+
+
+</script>
+    
+<!-- Todo Section -->
+<script>
+    const TodoInputSection = document.querySelector(".todoInputContainer")
+    const todo = document.querySelector("#Todo")
+    const addTodo = document.querySelector(".AllTodoUl")
+
+    document.querySelector(".AddTaskButton").addEventListener("click", () => {
+        TodoInputSection.style.display = "block"
+    })
+
+    document.querySelector(".TododInputCancel").addEventListener('click', () => {
+        TodoInputSection.style.display = "none"
+    })
+
+    document.querySelector(".TododInputSubmit").addEventListener('click', () => {
+        TodoInputSection.style.display = "none"
+
+        const NewTodo = document.createElement("li")
+        NewTodo.className = "todo-item"
+        NewTodo.innerHTML = `
+        <input type="checkbox" id="task1">
+        <label for="task1">${todo.value}</label>
+        `
+        
+        if(todo.value !== ""){
+            addTodo.appendChild(NewTodo)
+            todo.value = ""
+        }
+    })
+
+
+</script>
+</html>
