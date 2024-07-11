@@ -4,52 +4,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Expense Tracker</title>
-    <link rel="shortcut icon" href="10986471.webp" type="image/x-icon">
-    <link rel="stylesheet" href="style.css">
+    <title>My Project Showcase</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&family=Montserrat:wght@600&display=swap');
+
+        :root {
+            --bg-color: #f5f5f5;
+            --card-bg: #ffffff;
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --text-primary: #333333;
+            --text-secondary: #666666;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            background-color: var(--primary);
+            color: white;
+            width: 100%;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-family: 'Montserrat', sans-serif;
+            margin: 0;
+            font-size: 2.5rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        .card {
+            background-color: var(--card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        a .card-content {
+            padding: 1.5rem;
+        }
+
+        .card-logo {
+            width: 60px;
+            height: 60px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .card h2 {
+            margin: 0 0 1rem;
+            color: var(--primary);
+        }
+
+        .card p {
+            margin: 0;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        @media (max-width: 600px) {
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <header>
+        <h1>My Project Showcase</h1>
+    </header>
+    <div class="grid-container" id="projectGrid"></div>
+    <a href=""></a>
 
-    <div class="container">
-        <h1>Expense Tracker</h1>
-        <div class="form">
-            <div class="form-group">
-                <label for="expense-category">Category:</label>
-                <select name="expense-category" id="expense-category">
-                    <option value="food">Food</option>
-                    <option value="shopping">Shopping</option>
-                    <option value="transportation">Transportation</option>
-                    <option value="entertainment">Entertainment</option>
-                    <option value="others">Others</option>
-                    
-                </select>
-            </div>
-            <div class="form-group">
-                <label for="expense-name">Item Name:</label>
-                <input type="text" id="expense-name" placeholder="Enter name">
-            </div>
-            <div class="form-group">
-                <label for="expense-amount">Amount:</label>
-                <input type="number" id="expense-amount" placeholder="Enter amount">
-            </div>
-            <button id="add-expense-btn">Add Expense</button>
-            <button id="clear-all-expense-btn">Clear Expenses</button>
-        </div>
+    <script>
+        const projects = [
+            { name: "Todo List", logo: "📝", description: "A sleek and efficient todo list to boost your productivity.", link : "./Todo-list/index.html" },
+            { name: "Expense Tracker", logo: "💰", description: "Keep your finances in check with this intuitive expense tracker." , link : "./Expense-tracker/index.html"},
+            { name: "Pomodoro Timer", logo: "⏱️", description: "Enhance your focus and productivity with this Pomodoro timer." , link : "./Timer-with-todo/index.html"},
 
-        <div class="expense-list" id="expense-list">
-            <!-- Expenses will be dynamically added here -->
-        </div>
+        ];
 
-        <div class="total-expense" id="total-expense">
-            <h2>Total Expenses</h2>
-            <ul id="total-expense-list">
-                <!-- Total expenses will be dynamically added here -->
-            </ul>
-        </div>
-    </div>
+        const projectGrid = document.getElementById('projectGrid');
 
-    <script src="script.js"></script>
+        function createProjectCard(project) {
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.innerHTML = `
+                <a href="${project.link}"> 
+                    <div class="card-content">
+                        <div class="card-logo">${project.logo}</div>
+                        <h2>${project.name}</h2>
+                        <p>${project.description}</p>
+                    </div>
+                </a>
+            `;
+            return card;
+        }
+
+        projects.forEach(project => {
+            projectGrid.appendChild(createProjectCard(project));
+        });
+    </script>
 </body>
 
 </html>

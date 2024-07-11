@@ -1,0 +1,337 @@
+::-webkit-scrollbar{
+    display: none;
+}
+
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    width: 100vw;
+    height: 100vh;
+    background-color: #ba4949;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.container{
+    height: fit-content;
+    width: auto;
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+
+
+}
+
+.TimerSection{
+    height: 300px;
+    width: 500px;
+    background-color: #c15c5c;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.TSnav{
+    width: 100%;
+    height: fit-content;
+    margin: 5px;
+    padding: 8px;
+    color: aliceblue;
+    font-family: "Tauri", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+
+}
+
+.TSnav > div{
+    cursor: pointer;
+}
+
+.TSnav > .settings-icon{
+    justify-self: right;
+}
+.TSnav > .settings-icon:hover{
+    color:#000000;
+}
+
+.TStimer{
+    font-size: 100px;
+    color: whitesmoke;
+    font-family: "Concert One", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.TStimerInputContainer{
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    background-color: rgba(245, 245, 245, 0.434);
+    border: 1px solid rgb(40, 40, 40);
+    border-radius: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+}
+.TStimerInput{
+    height: 300px;
+    width: 400px;
+    background-color: rgb(245, 245, 245);
+    border: 1px solid rgb(40, 40, 40);
+    border-radius: 10px;
+    padding: 50px;
+    position: relative;
+    top: 25%;
+    left: 35%;
+}
+
+.TStimerInput label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #333; /* Text color */
+}
+
+.TStimerInput input[type="number"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+.TStimerInput input[type="number"]:focus {
+    outline: none;
+    border-color: #007bff; 
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /
+}
+
+.TStimerInputButtons{
+    height: 100px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.TStimerInputButtons button{
+    width: 120px;
+    height: 50px;
+    margin-bottom: 13px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ba4949;
+    font-family: "Tauri", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.TStimerInputButtons > .apply{
+    color: #fff;
+}
+
+.TStimerInputButtons > .cancel{
+    background-color: #65656512;
+    color: rgba(51, 51, 51, 0.662);
+}
+
+
+.TSstartButton{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.TSstartButton > button{
+    width: 200px;
+    height: 50px;
+    margin-bottom: 13px;
+    border-radius: 5px;
+    border: none;
+
+    color: #ba4949;
+    font-family: "Tauri", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 25px;
+    cursor: pointer;
+
+}
+
+.countDodown-end-button{
+    display: none;
+}
+
+.TodoSection{
+    width: 100%;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+
+}
+
+.todoHeading{
+    align-self:baseline;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 13px;
+    color: whitesmoke;
+    font-size: 25px;
+}
+
+.AllTodo{
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+}
+
+.AllTodo > ul {
+    list-style: none ;
+    width: 500px;
+}
+
+.AllTodo > ul > li{
+    width: 100%;
+    border-left: 5px solid black;
+    border-radius: 5px;
+    height: 50px;
+    margin: 5px;
+    padding: 8px;
+    background-color: #fff;
+    font-size: larger;
+    font-family: "Bitter", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+}
+
+.AllTodo > ul > li > input[type="checkbox"]:checked + label {
+    text-decoration: line-through;
+    color: #888888;
+    transition: all 0.5s ease-in-out;
+}
+
+.todoInputButton > button{
+    width: 400px;
+    height: 50px;
+    border: 2px dashed #ca8d8db7;
+    background-color: #c15c5cab;
+    border-radius: 5px;
+    margin-top: 10px;
+    cursor: pointer;
+
+
+    font-family: "Concert One", sans-serif;
+    font-weight: 300;
+    font-style: normal;
+    color: rgba(240, 248, 255, 0.672);
+    font-size: larger;
+}
+
+.todoInputButton > button:hover{
+    border: 2px dashed #ca8d8d;
+    background-color: #c15c5c;
+    color: aliceblue;
+
+}
+
+.todoInputContainer{
+    position: absolute;
+    top: 25%;
+    height: 70vh;
+    width: 100vw;
+    background-color: #ffffff7f;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+
+}
+
+.totoInput{
+    height: 300px;
+    width: 400px;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin: 20px;
+
+    position: relative;
+    top: 10%;
+    left: 35%;
+
+    padding: 50px;
+    font-size: larger;
+    display: flex;
+    flex-direction: column;
+}
+
+.totoInput > input[type="text"]{
+    height: 50px;
+    padding: 20px;
+    margin-top: 20px;
+    font-size: large;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    outline: none;
+    border: none;
+}
+
+
+
+.totoInput > .todoButtons{
+    height: 100px;
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    align-self: center;
+}
+
+.totoInput > .todoButtons > button{
+    width: 120px;
+    height: 50px;
+    margin-bottom: 13px;
+    border-radius: 5px;
+    border: none;
+    background-color: #ba4949;
+    font-family: "Tauri", sans-serif;
+    font-weight: 600;
+    font-style: normal;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.totoInput > .todoButtons > .TododInputCancel{
+    background-color: #65656512;
+    color: rgba(51, 51, 51, 0.662);
+}
+
+.totoInput > .todoButtons > .TododInputSubmit{
+    color: white;
+}
+

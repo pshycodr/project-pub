@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do List</title>
+    <style>
+        ::-webkit-scrollbar {
+            display: none;
+        }
+
+        @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+        body {
+            font-family: 'Fredoka One', sans-serif;
+            background-color: rgb(217, 132, 217);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        .todo-container {
+            width: 400px;
+            max-height: 80vh;
+            background-color: #72cfc4;
+            border-radius: 12px;
+            border: 5px solid #3e4850;
+            overflow: hidden;
+            padding: 20px;
+            position: relative;
+            box-shadow: 8px 8px 0px 0px #3e4850;
+
+        }
+
+        .todo-header {
+            font-size: 24px;
+            margin-bottom: 20px;
+            text-align: center;
+            letter-spacing: 1px;
+            font-weight: bolder;
+        }
+
+        .todo-list {
+            overflow-y: auto;
+            /* Allows scrolling */
+            padding: 0;
+            list-style-type: none;
+            margin: 0;
+            max-height: 500px;
+        }
+
+        .todo-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 15px;
+            background-color: #fdf1e1;
+            border: 3px solid #3e4850;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+
+        .todo-item input[type="checkbox"] {
+            margin-right: 10px;
+            transform: scale(1.5);
+        }
+
+        .todo-item span {
+            flex-grow: 1;
+            font-size: 18px;
+            color: #3e4850;
+        }
+
+        .todo-item #deleteTodo,
+        #editTodo {
+            background-color: #f25c54;
+            color: #fff;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 18px;
+            line-height: 0;
+            padding: 0;
+            margin: 2px;
+            box-shadow: 1px 1px 0px 0px #3e4850;
+
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        #editTodo {
+            background-color: #3488e7ef;
+        }
+
+        #editTodo:hover {
+            background-color: #2983ea;
+        }
+
+        .todo-item #deleteTodo:hover {
+            background-color: #ef4836;
+        }
+
+        .todo-item button:active {
+            transform: scale(0.9);
+        }
+
+        .todo-item button img {
+            width: 16px;
+            height: 16px;
+        }
+
+        .add-todo {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .add-todo input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            border: 3px solid #3e4850;
+            border-radius: 8px;
+            background-color: #fff;
+            font-size: 16px;
+        }
+
+        .todo-item input[type="checkbox"]:checked+span {
+            text-decoration: line-through;
+            color: #888888;
+            transition: all 0.5s ease-in-out;
+
+        }
+
+        .add-todo button {
+            padding: 10px;
+            background-color: #ffc857;
+            color: #3e4850;
+            border: 3px solid #3e4850;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-left: 10px;
+            box-shadow: 4px 4px 0px 0px #3e4850;
+
+            transition: transform 0.2s, background-color 0.2s;
+        }
+
+        .add-todo button:hover {
+            background-color: #ffb240;
+            color: #313a41;
+
+        }
+
+        .add-todo button:active {
+            transform: scale(0.9);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="todo-container">
+        <div class="todo-header">
+            Things to do:
+        </div>
+        <div class="add-todo">
+            <input type="text" id="newTodo" placeholder="Add a new task">
+            <button id="addButton">Add</button>
+        </div>
+        <ul class="todo-list" id="todoList">
+            <!-- Todo items will be added here -->
+        </ul>
+    </div>
+
+    <script>
+
+        const NewTodoInput = document.getElementById('newTodo')
+        const TodoList = document.getElementById('todoList')
+        const AddTodoButton = document.getElementById('addButton')
+
+        const AllTodo = JSON.parse(localStorage.getItem('ToDos')) || [];
+
+        console.log(AllTodo);
+        let NewTodo = ""
+        function renderTodo() {
+            TodoList.innerHTML = ""
+            AllTodo.forEach((todo, index) => {
+                console.log(todo);
+                NewTodo = document.createElement('li')
+                NewTodo.className = "todo-item"
+                NewTodo.innerHTML = `
+                <input type="checkbox" id="todoDone${index}" ${todo.done ? 'checked' : ''}  onchange="toggleDone(${index})">
+                <span>${todo.text}</span>
+                <button id="deleteTodo" onclick="RemoveTodo(${index})">
+                   <img src="delete-512.png">
+                </button>
+                <button id="editTodo" onclick="EditTodo(${index})">
+                   <img src="pencil.png">
+                </button>
+                `
+                TodoList.appendChild(NewTodo)
+            });
+        }
+
+
+        function storeTodo() {
+            let currentTodo = NewTodoInput.value
+            if (currentTodo == "") {
+                return alert("Please Enter a Todo")
+            }
+            AllTodo.push({ text: currentTodo, done: false })
+            localStorage.setItem('ToDos', JSON.stringify(AllTodo))
+        }
+
+        function toggleDone(index) {
+            AllTodo[index].done = !AllTodo[index].done
+            localStorage.setItem('ToDos', JSON.stringify(AllTodo))
+            renderTodo()
+        }
+
+        function RemoveTodo(index) {
+            AllTodo.splice(index, 1)
+            localStorage.setItem('ToDos', JSON.stringify(AllTodo))
+            renderTodo()
+        }
+
+        function EditTodo(index) {
+            const todo = AllTodo[index].text
+            console.log(todo);
+
+            AllTodbso.splice(index, 1)
+            NewTodoInput.value = todo
+        }
+
+
+        AddTodoButton.addEventListener('click', () => {
+            storeTodo()
+            NewTodoInput.value = ""
+            renderTodo()
+        })
+
+        NewTodoInput.addEventListener('keydown', (event) => {
+            if (event.key === 'Enter') {
+                storeTodo();
+                NewTodoInput.value = ""
+                renderTodo()
+            }
+        });
+
+
+        // localStorage.clear();
+
+
+
+    </script>
+
+</body>
+
+</html>
