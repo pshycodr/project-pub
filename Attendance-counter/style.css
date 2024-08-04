@@ -1,0 +1,213 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css");
+
+:root {
+  --primary-color: #4caf50;
+  --secondary-color: #8bc34a;
+  --background-color: #f1f8e9;
+  --card-color: #ffffff;
+  --text-color: #333333;
+  --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  /* transition: background-color 0.3s ease, color 0.3s ease; */
+}
+
+body {
+  font-family: "Poppins", sans-serif;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+h1,
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-weight: 600;
+}
+
+.add_sub_sec {
+  /* border:  solid black; */
+  height: 2.5rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+.add_sub_input {
+  padding: 12px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px 0 0 25px;
+  width: 60%;
+  max-width: 300px;
+  background-color: var(--card-color);
+  color: var(--text-color);
+  box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+button {
+  padding: 12px 20px;
+  font-size: 16px;
+  border: none;
+  border-radius: 25px;
+  background-color: var(--primary-color);
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.1s ease;
+  box-shadow: 0 2px 5px var(--shadow-color);
+}
+
+button:hover {
+  background-color: var(--secondary-color);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+.add_sub_button {
+  border-radius: 0 25px 25px 0;
+}
+
+.sub_card_section {
+  /* border: 1px solid black; */
+  width: 100%;
+  padding: 50px;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+@media (max-width: 600px){  
+  .sub_card_section{
+    grid-template-columns: repeat(1, 1fr);
+
+}
+
+}
+
+.sub_card {
+  width: 18rem;
+  background-color: var(--card-color);
+  border-radius: 15px;
+  padding: 20px;
+  box-shadow: 0 4px 6px var(--shadow-color);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.sub_card:hover {
+  transform: translateY(-5px);
+}
+
+.card_logo {
+  width: 80px;
+  height: 80px;
+  background-color: var(--secondary-color);
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 24px;
+  color: white;
+  margin-bottom: 15px;
+}
+
+.card_sub_name {
+  font-size: 18px;
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+
+.card_attendance_count {
+  font-size: 25px;
+  font-weight: 600;
+  margin-bottom: 15px;
+  color: var(--primary-color);
+}
+
+.card_attendance_count_sec {
+  display: flex;
+  gap: 15px;
+}
+
+#all_attendance {
+  height: auto;
+  width: 50%;
+}
+
+@media (max-width: 600px) {
+  #all_attendance {
+    height: auto;
+    width: auto;
+  }
+}
+
+#attendance_filter {
+  display: flex;
+  gap: 15px;
+
+  font-size: 20px;
+}
+
+#subject_filter {
+  width: 150px;
+  font-size: 18px;
+}
+
+table {
+  width: 100%;
+  padding: 20px;
+}
+
+tr {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px;
+}
+
+#delete_entry_button{
+  height: 2rem;
+  width: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: rgb(212, 141, 0);
+}
+
+#delete_img{
+  height: 1rem;
+  width: 1rem;
+}
+
+
+.distroy{
+  height: 2px;
+  width: 2px;
+  margin: 5px;
+  background-color: red;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

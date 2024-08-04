@@ -1,0 +1,10 @@
+{
+    "Python":{
+        "total_attendance" : 10,
+        "attandance_dates" : []
+    },
+    "C":{
+        "total_attendance" : 10,
+        "attandance_dates" : []
+    }
+}

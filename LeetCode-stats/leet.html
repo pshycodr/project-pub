@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LeetCode Stats Viewer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f0f4f8;
+            --text-color: #333;
+            --primary-color: #4a90e2;
+            --secondary-color: #50c878;
+            --card-bg: #ffffff;
+        }
+
+        .dark-mode {
+            --bg-color: #1a1a2e;
+            --text-color: #e0e0e0;
+            --primary-color: #6ab4f8;
+            --secondary-color: #72e6a0;
+            --card-bg: #16213e;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 2rem;
+            color: var(--primary-color);
+        }
+
+        .input-container {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        input {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 4px;
+            margin-right: 1rem;
+        }
+
+        button {
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: var(--secondary-color);
+        }
+
+        .stats-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .stat-card {
+            background-color: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stat-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 300;
+        }
+
+        .progress-bar {
+            height: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 1rem;
+        }
+
+        .progress {
+            height: 100%;
+            background-color: var(--secondary-color);
+            transition: width 0.5s ease-out;
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 1rem;
+            right: 1rem;
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .theme-toggle:hover {
+            background-color: var(--secondary-color);
+        }
+
+        @media (max-width: 600px) {
+            .input-container {
+                flex-direction: column;
+            }
+
+            input {
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>LeetCode Stats Viewer</h1>
+        <div class="input-container">
+            <input type="text" id="username-input" placeholder="Enter LeetCode username">
+            <button id="fetch-btn">Fetch Stats</button>
+        </div>
+        <div class="stats-container" id="stats-container"></div>
+    </div>
+    <button class="theme-toggle" id="theme-toggle">🌓</button>
+
+    <script>
+        const API_KEY = 'https://leetcode-stats-api.herokuapp.com/';
+        const usernameInput = document.getElementById('username-input');
+        const fetchBtn = document.getElementById('fetch-btn');
+        const statsContainer = document.getElementById('stats-container');
+        const themeToggle = document.getElementById('theme-toggle');
+
+        // Load username from local storage
+        usernameInput.value = localStorage.getItem('leetcode-username') || '';
+
+        fetchBtn.addEventListener('click', fetchStats);
+        themeToggle.addEventListener('click', toggleTheme);
+
+        function fetchStats() {
+            const username = usernameInput.value.trim();
+            if (!username) return;
+
+            // Save username to local storage
+            localStorage.setItem('leetcode-username', username);
+
+            fetch(API_KEY + username)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.status === 'success') {
+                        displayStats(data);
+                    } else {
+                        alert('Error fetching stats. Please check the username and try again.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred. Please try again later.');
+                });
+        }
+
+        function displayStats(data) {
+            statsContainer.innerHTML = '';
+            
+            const stats = [
+                { title: 'Total Solved', value: data.totalSolved, total: data.totalQuestions },
+                { title: 'Easy Solved', value: data.easySolved, total: data.totalEasy },
+                { title: 'Medium Solved', value: data.mediumSolved, total: data.totalMedium },
+                { title: 'Hard Solved', value: data.hardSolved, total: data.totalHard },
+                { title: 'Acceptance Rate', value: data.acceptanceRate.toFixed(1) + '%', total: 100 },
+                { title: 'Ranking', value: data.ranking.toLocaleString(), total: null },
+                { title: 'Contribution Points', value: data.contributionPoints, total: null },
+                { title: 'Reputation', value: data.reputation, total: null }
+            ];
+
+            stats.forEach(stat => {
+                const card = document.createElement('div');
+                card.className = 'stat-card';
+                card.innerHTML = `
+                    <div class="stat-title">${stat.title}</div>
+                    <div class="stat-value">${stat.value}</div>
+                    ${stat.total ? `
+                        <div class="progress-bar">
+                            <div class="progress" style="width: ${(stat.value / stat.total * 100).toFixed(2)}%"></div>
+                        </div>
+                    ` : ''}
+                `;
+                statsContainer.appendChild(card);
+            });
+        }
+
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('dark-mode', document.body.classList.contains('dark-mode'));
+        }
+
+        // Load theme preference from local storage
+        if (localStorage.getItem('dark-mode') === 'true') {
+            document.body.classList.add('dark-mode');
+        }
+
+        // Fetch stats on page load if username is available
+        if (usernameInput.value) {
+            fetchStats();
+        }
+    </script>
+</body>
+</html>

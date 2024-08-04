@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Attendance Counter for Students</title>
+</head>
+
+<body>
+    <div class="container">
+        <div class="headder">
+            <h1 class="heading">Count Your Attendance</h1>
+        </div>
+
+        <div class="add_sub_sec">
+            <input type="text" name="" id="" class="add_sub_input" placeholder="Add Subject">
+            <button type="submit" class="add_sub_button">Add Subject</button>
+        </div>
+
+        <div class="sub_card_section">
+        </div>
+
+        <div id="all_attendance">
+            <h2>All Attendances</h2>
+            <div id="attendance_filter">
+                <label for="subject_filter">Filter by subject:</label>
+                <select id="subject_filter" onchange="addAttendanceTable(this.value)">
+                    <option value="all">All Subjects</option>
+                </select>
+            </div>
+            <table id="attendance_table">
+                <thead>
+                    <tr>
+                        <th>Subject</th>
+                        <th>Date</th>
+                    </tr>
+                </thead>
+                <tbody>
+                  
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <button class="distroy" onclick="distroy()">X</button>
+</body>
+
+<script src="script.js"></script>
+
+</html>
