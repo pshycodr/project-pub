@@ -1,0 +1,151 @@
+::-webkit-scrollbar {
+    display: none;
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
+
+body {
+    font-family: 'Fredoka One', sans-serif;
+    background-color: rgb(217, 132, 217);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+}
+
+.todo-container {
+    width: 400px;
+    max-height: 80vh;
+    background-color: #72cfc4;
+    border-radius: 12px;
+    border: 5px solid #3e4850;
+    overflow: hidden;
+    padding: 20px;
+    position: relative;
+    box-shadow: 8px 8px 0px 0px #3e4850;
+}
+
+.todo-header {
+    font-size: 24px;
+    margin-bottom: 20px;
+    text-align: center;
+    letter-spacing: 1px;
+    font-weight: bolder;
+}
+
+.todo-list {
+    overflow-y: auto;
+    padding: 0;
+    list-style-type: none;
+    margin: 0;
+    max-height: 500px;
+}
+
+.todo-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background-color: #fdf1e1;
+    border: 3px solid #3e4850;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+
+.todo-item input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.5);
+}
+
+.todo-item span {
+    flex-grow: 1;
+    font-size: 18px;
+    color: #3e4850;
+}
+
+.todo-item #deleteTodo,
+#editTodo {
+    background-color: #f25c54;
+    color: #fff;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 18px;
+    line-height: 0;
+    padding: 0;
+    margin: 2px;
+    box-shadow: 1px 1px 0px 0px #3e4850;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+#editTodo {
+    background-color: #3488e7ef;
+}
+
+#editTodo:hover {
+    background-color: #2983ea;
+}
+
+.todo-item #deleteTodo:hover {
+    background-color: #ef4836;
+}
+
+.todo-item button:active {
+    transform: scale(0.9);
+}
+
+.todo-item button img {
+    width: 16px;
+    height: 16px;
+}
+
+.add-todo {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+.add-todo input[type="text"] {
+    width: 70%;
+    padding: 10px;
+    border: 3px solid #3e4850;
+    border-radius: 8px;
+    background-color: #fff;
+    font-size: 16px;
+}
+
+.todo-item input[type="checkbox"]:checked + span {
+    text-decoration: line-through;
+    color: #888888;
+    transition: all 0.5s ease-in-out;
+}
+
+.add-todo button {
+    padding: 10px;
+    background-color: #ffc857;
+    color: #3e4850;
+    border: 3px solid #3e4850;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-left: 10px;
+    box-shadow: 4px 4px 0px 0px #3e4850;
+    transition: transform 0.2s, background-color 0.2s;
+}
+
+.add-todo button:hover {
+    background-color: #ffb240;
+    color: #313a41;
+}
+
+.add-todo button:active {
+    transform: scale(0.9);
+}
