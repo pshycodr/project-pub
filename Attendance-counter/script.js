@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const subjectCardSec = document.querySelector(".sub_card_section");
   const subjectFilter = document.querySelector("#subject_filter");
   const attendanceTable = document.querySelector("#attendance_table");
+  
 
   let allData = JSON.parse(localStorage.getItem("data")) || {};
   let attendance_dates = JSON.parse(localStorage.getItem("attendance_dates")) || [];
@@ -119,6 +120,7 @@ document.addEventListener("DOMContentLoaded", () => {
   function renderAttendanceTable(sub = "all") {
     attendanceTable.innerHTML = "";
     const filteredAttendance = sub === "all" ? attendance_dates : attendance_dates.filter((entry) => entry.sub === sub);
+    console.log(filteredAttendance);
     filteredAttendance.forEach((entry, index) => {
       const newRow = createAttendanceRow(entry, index, sub);
       attendanceTable.appendChild(newRow);
@@ -131,9 +133,9 @@ document.addEventListener("DOMContentLoaded", () => {
       <td>${entry.sub}</td>
       <td>${entry.date}</td>
       <td>
-      <button id="delete_entry_button" onclick="removeEntry(${index},'${sub}', '${entry.sub}')">
-      <img id="delete_img" src="delete.png">
-    </button>
+        <button id="delete_entry_button" onclick="removeEntry(${index},'${sub}', '${entry.sub}')">
+          <img id="delete_img" src="delete.png">
+        </button>
       </td>
     `;
     return newRow;
@@ -149,8 +151,12 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   };
 
+  subjectFilter.addEventListener("change", function () {
+    renderAttendanceTable(this.value);
+  });
+
   window.distroy = function () {
     localStorage.clear();
     location.reload();
   };
-});
+}); 
