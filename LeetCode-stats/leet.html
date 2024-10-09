@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -151,6 +152,7 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <h1>LeetCode Stats Viewer</h1>
@@ -199,7 +201,7 @@
 
         function displayStats(data) {
             statsContainer.innerHTML = '';
-            
+
             const stats = [
                 { title: 'Total Solved', value: data.totalSolved, total: data.totalQuestions },
                 { title: 'Easy Solved', value: data.easySolved, total: data.totalEasy },
@@ -243,4 +245,5 @@
         }
     </script>
 </body>
+
 </html>
