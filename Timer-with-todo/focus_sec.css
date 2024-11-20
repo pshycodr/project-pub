@@ -1,337 +1,509 @@
+       
 ::-webkit-scrollbar{
     display: none;
 }
 
-*{
-    margin: 0px;
-    padding: 0px;
+* {
+    margin: 0;
+    padding: 0;
     box-sizing: border-box;
 }
 
-body{
-    width: 100vw;
-    height: 100vh;
-    background-color: #ba4949;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-wrap: wrap;
+:root {
+    --primary-gradient: linear-gradient(135deg, #b15212 0%, #3a8fda  100%);
+    --secondary-gradient: linear-gradient(135deg, #FF6B6B 0%, #FF000F 100%);
+    --surface-color: rgba(230, 230, 230, 0.1);
+    --surface-border: rgba(255, 255, 255, 0.12);
+    --text-primary: rgb(0, 0, 0);
+    --text-secondary: rgba(255, 255, 255, 0.7);
+    --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.1);
+    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.15);
+    --shadow-lg: 0 8px 32px rgba(0, 0, 0, 0.2);
+    --border-radius-sm: 12px;
+    --border-radius-md: 20px;
+    --border-radius-lg: 28px;
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
 }
 
-.container{
-    height: fit-content;
-    width: auto;
-    padding: 20px;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
-    align-items: center;
-    flex-wrap: wrap;
-
-
+body {
+    min-height: 100vh;
+    background: var(--primary-gradient);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+    font-family: 'Inter', sans-serif;
+    color: var(--text-primary);
+    display: grid;
+    place-items: center;
+    padding: clamp(1rem, 5vw, 3rem);
 }
 
-.TimerSection{
-    height: 300px;
-    width: 500px;
-    background-color: #c15c5c;
-    border-radius: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-
+@keyframes gradientAnimation {
+    0% { background-position: 0% 50% }
+    50% { background-position: 100% 50% }
+    100% { background-position: 0% 50% }
 }
 
-.TSnav{
+/* Animated Blobs */
+.blob-container {
+    position: fixed;
     width: 100%;
-    height: fit-content;
-    margin: 5px;
-    padding: 8px;
-    color: aliceblue;
-    font-family: "Tauri", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-
-    display: flex;
-    justify-content: space-evenly;
-    flex-wrap: wrap;
-
+    height: 100%;
+    top: 0;
+    left: 0;
+    filter: blur(40px);
+    opacity: 0.8;
+    z-index: -1;
 }
 
-.TSnav > div{
-    cursor: pointer;
-}
-
-.TSnav > .settings-icon{
-    justify-self: right;
-}
-.TSnav > .settings-icon:hover{
-    color:#000000;
-}
-
-.TStimer{
-    font-size: 100px;
-    color: whitesmoke;
-    font-family: "Concert One", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.TStimerInputContainer{
+.blob {
     position: absolute;
-    height: 100vh;
-    width: 100vw;
-    background-color: rgba(245, 245, 245, 0.434);
-    border: 1px solid rgb(40, 40, 40);
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    display: none;
+    border-radius: 50%;
+    filter: blur(10px);
+    animation: float 10s infinite;
 }
-.TStimerInput{
-    height: 300px;
+
+.blob:nth-child(1) {
     width: 400px;
-    background-color: rgb(245, 245, 245);
-    border: 1px solid rgb(40, 40, 40);
-    border-radius: 10px;
-    padding: 50px;
-    position: relative;
-    top: 25%;
-    left: 35%;
+    height: 400px;
+    left: -100px;
+    top: -100px;
+    background: linear-gradient(135deg, #c58dc5f8 0%, #fac0fe 100%);
+    animation-delay: -2s;
 }
 
-.TStimerInput label {
-    display: block;
-    margin-bottom: 5px;
-    font-weight: bold;
-    color: #333; /* Text color */
+.blob:nth-child(2) {
+    width: 350px;
+    height: 350px;
+    right: -80px;
+    top: 20%;
+    background: linear-gradient(135deg, #a6c0fe 0%, #90b8ff 100%);
+    animation-delay: -5s;
 }
 
-.TStimerInput input[type="number"] {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    box-sizing: border-box;
+.blob:nth-child(3) {
+    width: 300px;
+    height: 300px;
+    left: 20%;
+    bottom: -80px;
+    background: linear-gradient(135deg, #f68084 0%, #f78c90 100%);
+    animation-delay: -8s;
 }
 
-.TStimerInput input[type="number"]:focus {
-    outline: none;
-    border-color: #007bff; 
-    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5); /
+@keyframes float {
+    0% {
+        transform: translate(0, 0) scale(1) rotate(0deg);
+    }
+    33% {
+        transform: translate(30px, -50px) scale(1.1) rotate(120deg);
+    }
+    66% {
+        transform: translate(-20px, 20px) scale(0.9) rotate(240deg);
+    }
+    100% {
+        transform: translate(0, 0) scale(1) rotate(360deg);
+    }
 }
 
-.TStimerInputButtons{
-    height: 100px;
+/* Container Styles */
+.container {
+    width: min(100%, 900px);
+    display: grid;
+    gap: clamp(1.5rem, 3vw, 2.5rem);
+    background: var(--surface-color);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--surface-border);
+    border-radius: var(--border-radius-lg);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    box-shadow: var(--shadow-lg);
+}
+
+/* Timer Section Styles */
+.TimerSection {
+    background: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    padding: clamp(2rem, 5vw, 3rem);
+    display: grid;
+    gap: 2rem;
+    text-align: center;
+    border: 1px solid var(--surface-border);
+    box-shadow: var(--shadow-md);
+}
+
+.TSnav {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.TStimerInputButtons button{
-    width: 120px;
-    height: 50px;
-    margin-bottom: 13px;
-    border-radius: 5px;
-    border: none;
-    background-color: #ba4949;
-    font-family: "Tauri", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 20px;
-    cursor: pointer;
-}
-
-.TStimerInputButtons > .apply{
-    color: #fff;
-}
-
-.TStimerInputButtons > .cancel{
-    background-color: #65656512;
-    color: rgba(51, 51, 51, 0.662);
-}
-
-
-.TSstartButton{
-    width: 100%;
-    display: flex;
-    justify-content: space-evenly;
-}
-
-.TSstartButton > button{
-    width: 200px;
-    height: 50px;
-    margin-bottom: 13px;
-    border-radius: 5px;
-    border: none;
-
-    color: #ba4949;
-    font-family: "Tauri", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 25px;
-    cursor: pointer;
-
-}
-
-.countDodown-end-button{
-    display: none;
-}
-
-.TodoSection{
-    width: 100%;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: center;
     flex-wrap: wrap;
-
+    justify-content: center;
+    gap: 1rem;
+    position: relative;
 }
 
-.todoHeading{
-    align-self:baseline;
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 13px;
-    color: whitesmoke;
-    font-size: 25px;
+.TSnav > div {
+    padding: 0.75rem 1.5rem;
+    background: var(--surface-color);
+    border-radius: var(--border-radius-sm);
+    cursor: pointer;
+    transition: var(--transition-normal);
+    font-weight: 500;
+    font-size: clamp(0.875rem, 2vw, 1rem);
+    border: 1px solid var(--surface-border);
+    min-width: 120px;
 }
 
-.AllTodo{
-    height: fit-content;
+.TSnav > div:hover:not(.settings-icon) {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+}
+
+.TSnav > .focus {
+    background: rgba(255, 255, 255, 0.25);
+    box-shadow: var(--shadow-sm);
+}
+
+.settings-icon {
+    position: absolute;
+    right: 0;
+    padding: 0.75rem !important;
+    min-width: unset !important;
+    aspect-ratio: 1;
+    display: grid;
+    place-items: center;
+}
+
+.settings-icon:hover {
+    transform: rotate(90deg);
+}
+
+.TStimer {
+    font-size: clamp(4rem, 15vw, 8rem);
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -2px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    font-variant-numeric: tabular-nums;
+}
+
+.TSstartButton {
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
 }
 
-.AllTodo > ul {
-    list-style: none ;
-    width: 500px;
+.TSstartButton button {
+    padding: 1rem 2rem;
+    min-width: 140px;
+    border-radius: var(--border-radius-sm);
+    border: 1px solid var(--surface-border);
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: var(--transition-normal);
+    background: var(--surface-color);
+    color: var(--text-primary);
 }
 
-.AllTodo > ul > li{
-    width: 100%;
-    border-left: 5px solid black;
-    border-radius: 5px;
-    height: 50px;
-    margin: 5px;
-    padding: 8px;
-    background-color: #fff;
-    font-size: larger;
-    font-family: "Bitter", serif;
-    font-optical-sizing: auto;
-    font-weight: 400;
-    font-style: normal;
+.countDodown-start-button {
+    background: rgba(255, 255, 255, 0.2) !important;
 }
 
-.AllTodo > ul > li > input[type="checkbox"]:checked + label {
+.TSstartButton button:hover {
+    transform: translateY(-2px);
+    background: rgba(255, 255, 255, 0.25) !important;
+    box-shadow: var(--shadow-md);
+}
+
+/* Todo Section Styles */
+.TodoSection {
+    background: var(--surface-color);
+    border-radius: var(--border-radius-md);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border: 1px solid var(--surface-border);
+    box-shadow: var(--shadow-md);
+}
+
+.todoHeading {
+    margin-bottom: 1.5rem;
+}
+
+.todoHeading p {
+    font-size: clamp(1.25rem, 3vw, 1.5rem);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.todoHeading hr {
+    border: none;
+    height: 2px;
+    background: var(--surface-border);
+}
+
+.AllTodoUl {
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+    margin-bottom: 1.5rem;
+    max-height: 50vh;
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.todo-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem;
+    background: var(--surface-color);
+    border-radius: var(--border-radius-sm);
+    transition: var(--transition-normal);
+    border: 1px solid var(--surface-border);
+}
+
+.todo-item:hover {
+    transform: translateX(5px);
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.todo-item input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+    border-radius: 4px;
+    border: 2px solid var(--surface-border);
+    appearance: none;
+    -webkit-appearance: none;
+    position: relative;
+    transition: var(--transition-fast);
+}
+
+.todo-item input[type="checkbox"]:checked {
+    background: rgba(255, 255, 255, 0.3);
+    border-color: transparent;
+}
+
+.todo-item input[type="checkbox"]:checked::after {
+    content: '✓';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.8rem;
+}
+
+.todo-item label {
+    font-size: 1rem;
+    transition: var(--transition-fast);
+    flex: 1;
+}
+
+.todo-item input[type="checkbox"]:checked + label {
     text-decoration: line-through;
-    color: #888888;
-    transition: all 0.5s ease-in-out;
+    opacity: 0.7;
 }
 
-.todoInputButton > button{
-    width: 400px;
-    height: 50px;
-    border: 2px dashed #ca8d8db7;
-    background-color: #c15c5cab;
-    border-radius: 5px;
-    margin-top: 10px;
+.AddTaskButton {
+    width: 100%;
+    padding: 1rem;
+    border: 2px dashed var(--surface-border);
+    background: var(--surface-color);
+    border-radius: var(--border-radius-sm);
+    color: var(--text-primary);
+    font-weight: 500;
     cursor: pointer;
-
-
-    font-family: "Concert One", sans-serif;
-    font-weight: 300;
-    font-style: normal;
-    color: rgba(240, 248, 255, 0.672);
-    font-size: larger;
-}
-
-.todoInputButton > button:hover{
-    border: 2px dashed #ca8d8d;
-    background-color: #c15c5c;
-    color: aliceblue;
-
-}
-
-.todoInputContainer{
-    position: absolute;
-    top: 25%;
-    height: 70vh;
-    width: 100vw;
-    background-color: #ffffff7f;
+    transition: var(--transition-normal);
     display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.AddTaskButton:hover {
+    background: rgba(255, 255, 255, 0.15);
+    border-style: solid;
+    transform: translateY(-2px);
+}
+
+/* Modal Styles */
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: none;
     justify-content: center;
     align-items: center;
-    display: none;
-
+    padding: 1rem;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
 }
 
-.totoInput{
-    height: 300px;
-    width: 400px;
-    background-color: white;
-    border: 2px solid black;
-    border-radius: 10px;
-    margin: 20px;
-
-    position: relative;
-    top: 10%;
-    left: 35%;
-
-    padding: 50px;
-    font-size: larger;
-    display: flex;
-    flex-direction: column;
+.modal-content {
+    width: min(100%, 500px);
+    background: rgba(255, 255, 255, 0.95);
+    padding: clamp(1.5rem, 4vw, 2.5rem);
+    border-radius: var(--border-radius-md);
+    color: #ffffff;
+    animation: modalSlideUp 0.3s ease forwards;
+    box-shadow: var(--shadow-lg);
 }
 
-.totoInput > input[type="text"]{
-    height: 50px;
-    padding: 20px;
-    margin-top: 20px;
-    font-size: large;
-    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-    outline: none;
-    border: none;
+@keyframes modalSlideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
+.modal-content h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+}
 
-
-.totoInput > .todoButtons{
-    height: 100px;
+.modal input {
     width: 100%;
+    padding: 1rem;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    border-radius: var(--border-radius-sm);
+    margin: 0.5rem 0 1rem;
+    font-size: 1rem;
+    transition: var(--transition-fast);
+}
+
+.modal input:focus {
+    outline: none;
+    border-color: rgba(107, 115, 255, 0.5);
+    box-shadow: 0 0 0 3px rgba(107, 115, 255, 0.1);
+}
+
+.modal-buttons {
     display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    align-self: center;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 1.5rem;
 }
 
-.totoInput > .todoButtons > button{
-    width: 120px;
-    height: 50px;
-    margin-bottom: 13px;
-    border-radius: 5px;
+.modal-buttons button {
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius-sm);
     border: none;
-    background-color: #ba4949;
-    font-family: "Tauri", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    font-size: 20px;
+    font-weight: 500;
     cursor: pointer;
+    transition: var(--transition-normal);
+    min-width: 100px;
 }
 
-.totoInput > .todoButtons > .TododInputCancel{
-    background-color: #65656512;
-    color: rgba(51, 51, 51, 0.662);
+.modal-buttons .cancel {
+    background: rgba(0, 0, 0, 0.1);
+    color: #333;
 }
 
-.totoInput > .todoButtons > .TododInputSubmit{
+.modal-buttons .submit {
+    background: #6B73FF;
     color: white;
 }
 
+.modal-buttons button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+}
+
+/* Scrollbar Styles */
+.AllTodoUl::-webkit-scrollbar {
+    width: 8px;
+}
+
+.AllTodoUl::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+}
+
+.AllTodoUl::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 4px;
+}
+
+.AllTodoUl::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+    .TSnav {
+        gap: 0.5rem;
+    }
+    
+    .TSnav > div {
+        padding: 0.6rem 1rem;
+        min-width: 100px;
+        font-size: 0.875rem;
+    }
+    
+    .settings-icon {
+        position: static;
+    }
+    
+    .TSstartButton button {
+        width: 100%;
+    }
+    
+    .modal-buttons {
+        flex-direction: column;
+    }
+    
+    .modal-buttons button {
+        width: 100%;
+    }
+}
+
+@media (max-width: 480px) {
+    .container {
+        padding: 1rem;
+    }
+    
+    .TimerSection, .TodoSection {
+        padding: 1.25rem;
+    }
+    
+    .TStimer {
+        font-size: 4rem;
+    }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+    .modal-content {
+        background: rgba(28, 28, 30, 0.95);
+        color: var(--text-primary);
+    }
+    
+    .modal-content h2 {
+        color: var(--text-primary);
+    }
+    
+    .modal input {
+        background: rgba(255, 255, 255, 0.1);
+        border-color: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+    }
+    
+    .modal-buttons .cancel {
+        background: rgba(255, 255, 255, 0.1);
+        color: var(--text-primary);
+    }
+}
+
+/* Print Styles */
+@media print {
+    body {
+        background: none;
+    }
+    
+    .container {
+        box-shadow: none;
+        border: 1px solid #ddd;
+    }
+    
+    .TimerSection, .TodoSection {
+        break-inside: avoid;
+    }
+}
