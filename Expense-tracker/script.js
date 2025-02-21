@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    function renserTotalExpense() {
+    function renderTotalExpense() {
         let total = 0;
         expenses.forEach((expense) => {
             total += expense.amount;
@@ -58,7 +58,7 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.setItem("expenses", JSON.stringify(expenses));
 
         renderExpensesList();
-        renserTotalExpense();
+        renderTotalExpense();
 
         expenseAmount.value = "";
         expenseItemName.value = "";
@@ -68,12 +68,12 @@ document.addEventListener("DOMContentLoaded", function () {
         localStorage.clear();
         expenses = [];
         renderExpensesList();
-        renserTotalExpense();
+        renderTotalExpense();
     }
 
     addExpenseBtn.addEventListener("click", addExpenses);
     clearExpenseBtn.addEventListener("click", clearAllExpenses);
 
     renderExpensesList();
-    renserTotalExpense();
+    renderTotalExpense();
 });
